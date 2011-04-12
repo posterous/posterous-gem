@@ -1,0 +1,5 @@
+Gemfile.lock
+.bundle
+test.log
+.DS_Store
+config/flowb.yml
