@@ -3,3 +3,4 @@ Gemfile.lock
 test.log
 .DS_Store
 config/flowb.yml
+spec/postly.yml

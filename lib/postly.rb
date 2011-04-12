@@ -1,4 +1,12 @@
+require 'typhoeus'
+require 'yaml'
+require 'json'
+require 'ostruct'
+
 module Postly
+  BASE_API_URL = 'http://posterous.com/api/v2'
+
+  autoload :Connection, 'postly/connection'
   extend self
 
   attr_reader :config
