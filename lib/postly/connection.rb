@@ -24,13 +24,13 @@ module Postly
       parsed = JSON.parse json
       return parsed.map{|r| OpenStruct.new(r) } if parsed.is_a?(Array)
       OpenStruct.new(parsed)
+    rescue
+      true
     end
 
     [:get, :post, :put, :delete].each do |verb|
       define_method verb do |path, params={}|
-
-
-        puts "#{verb.upcase} #{path} #{params}"
+        puts "#{verb.upcase} #{path} #{params}" if ENV['POSTLY_DEBUG']
 
         response  = http.send(verb, "#{Postly::BASE_API_URL}#{path}", default_options.merge!(:params => default_params.merge!(params)))
         result    = parse(response.body)

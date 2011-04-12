@@ -7,6 +7,8 @@ module Postly
   BASE_API_URL = 'http://posterous.com/api/v2'
 
   autoload :Connection, 'postly/connection'
+  autoload :Model,      'postly/model'
+  autoload :ManyProxy,  'postly/many_proxy'
   autoload :Site,       'postly/site'
   
   extend self

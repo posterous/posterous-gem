@@ -1,8 +1,8 @@
 module Postly
-  class Site
-    extend Postly::Connection
 
-    attr_reader :struct
+  class Site < Postly::Model
+    
+    many :posts, :Post
 
     def self.find id_or_hostname
       new get( "/sites/#{id_or_hostname}")
@@ -16,17 +16,15 @@ module Postly
       @sites ||= get("/sites",params).collect{|s| self.new(s) }
     end
 
-    def initialize struct
-      @struct = struct
+    def save
+      return if hash_for_update.empty?
+      @struct = self.class.put("/sites/#{self.id}", :site => hash_for_update )
+      changed_fields.clear
     end
 
-    def save params={}
-      @struct = self.class.put("/sites/#{self.id}", :site => params)
+    def destroy
+      self.class.delete("/sites/#{self.id}")
     end
 
-    def method_missing sym, *args, &block
-      return struct.send(sym) if struct.respond_to? sym
-      super(sym, *args, &block)
-    end
   end
 end
