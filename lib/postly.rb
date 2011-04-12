@@ -7,12 +7,20 @@ module Postly
   BASE_API_URL = 'http://posterous.com/api/v2'
 
   autoload :Connection, 'postly/connection'
+  autoload :Site,       'postly/site'
+  
   extend self
 
   attr_reader :config
 
   def config=(cfg)
-    @config = YAML.load_file(cfg) if cfg.is_a?(File)
-    @config = cfg if cfg.is_a?(Hash)
+    @config = case
+      when cfg.is_a?(File)
+        YAML.load_file(cfg)
+      when cfg.is_a?(Hash)
+        cfg
+      else
+        raise ArgumentError, 'Invalid Config'
+    end
   end
 end

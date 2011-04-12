@@ -28,10 +28,14 @@ module Postly
 
     [:get, :post, :put, :delete].each do |verb|
       define_method verb do |path, params={}|
+
+
+        puts "#{verb.upcase} #{path} #{params}"
+
         response  = http.send(verb, "#{Postly::BASE_API_URL}#{path}", default_options.merge!(:params => default_params.merge!(params)))
         result    = parse(response.body)
         
-        raise ConnectionError, result.error unless [200,201].include?(response.code)
+        raise ConnectionError, "#{result.error} #{result.message}" unless [200,201].include?(response.code)
 
         result
       end
