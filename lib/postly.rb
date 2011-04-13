@@ -10,6 +10,7 @@ module Postly
   autoload :Model,      'postly/model'
   autoload :ManyProxy,  'postly/many_proxy'
   autoload :Site,       'postly/site'
+  autoload :Post,       'postly/post'
   
   extend self
 

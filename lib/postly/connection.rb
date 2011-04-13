@@ -35,6 +35,8 @@ module Postly
         response  = http.send(verb, "#{Postly::BASE_API_URL}#{path}", default_options.merge!(:params => default_params.merge!(params)))
         result    = parse(response.body)
         
+        puts response.body if ENV['POSTLY_DEBUG']
+
         raise ConnectionError, "#{result.error} #{result.message}" unless [200,201].include?(response.code)
 
         result
