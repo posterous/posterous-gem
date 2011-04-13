@@ -1,15 +1,11 @@
 require 'helper'
 
-#VCR.use_cassette('site') do
-
 describe Postly::Site do
   include Postly
 
   before(:all) do
-    VCR.use_cassette('site_create_and_find') do
-      @site     = Site.create(:hostname => "newpostly#{Time.now.to_i}")
-      @primary  = Site.find('postertester')
-    end
+    @site     = Site.create(:hostname => "newpostly#{Time.now.to_i}")
+    @primary  = Site.find('postertester')
   end
 
   it "should find the primary site" do
@@ -21,9 +17,8 @@ describe Postly::Site do
   end
 
   it "should find all sites" do
-    VCR.use_cassette('site_all') do
-      @sites = Site.all(:page => 1)
-    end
+    @sites = Site.all(:page => 1)
+
     @sites.should be_an Array
   end
 
@@ -35,19 +30,13 @@ describe Postly::Site do
 
     it "should update a site" do
       @site.is_private = true
-      VCR.use_cassette('site_save_and_reload') do
-        @site.save
-        @site.reload.is_private.should be_true
-      end
+      @site.save
+      @site.reload.is_private.should be_true
     end
 
     it "should delete a site" do
-      VCR.use_cassette('site_destroy') do
-        @site.destroy.should be_true
-      end
+      @site.destroy.should be_nil
     end
   end
 
 end
-
-#end

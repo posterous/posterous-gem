@@ -18,7 +18,7 @@ module Postly
 
     def save
       return if hash_for_update.empty?
-      @struct = self.class.put("/sites/#{self.id}", :site => hash_for_update )
+      @struct = self.class.post("/sites/#{self.id}", '_method' => 'put', :site => hash_for_update )
       changed_fields.clear
     end
 

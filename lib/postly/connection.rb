@@ -25,7 +25,7 @@ module Postly
       return parsed.map{|r| OpenStruct.new(r) } if parsed.is_a?(Array)
       OpenStruct.new(parsed)
     rescue
-      true
+      nil
     end
 
     [:get, :post, :put, :delete].each do |verb|
@@ -37,7 +37,10 @@ module Postly
         
         puts response.body if ENV['POSTLY_DEBUG']
 
-        raise ConnectionError, "#{result.error} #{result.message}" unless [200,201].include?(response.code)
+        unless [200,201].include?(response.code)
+          msg = result.nil? ? response.body : "#{result.error} #{result.message}"
+          raise ConnectionError, msg 
+        end
 
         result
       end
