@@ -21,8 +21,8 @@ describe Postly::Site do
   describe "CRUD" do
 
     before(:all) do
-      @site = Site.create(:hostname => "newpostly#{Time.now.to_i}")
-      @site_id = @site.id
+      @site     = Site.create(:hostname => "newpostly#{Time.now.to_i}")
+      @site_id  = @site.id
     end
   
     describe "#create" do

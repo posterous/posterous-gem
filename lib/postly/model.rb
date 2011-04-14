@@ -7,7 +7,7 @@ module Postly
 
     def self.many collection_name, klass
       define_method collection_name do
-        return [] #ManyProxy.new self, klass
+        return ManyProxy.new self, klass
       end
     end
   

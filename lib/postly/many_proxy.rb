@@ -6,14 +6,13 @@ module Postly
       @proxied  = proxied
     end
     
-    def method_missing sym, *args, &block
-      if struct.respond_to? sym
-        changed_fields.push(sym.to_s.sub('=','').to_sym) if sym.to_s =~ /=/
-        return struct.send(sym,*args)
-      end
-      super(sym, *args, &block)
+    def all params={}
+      @klass.all( @proxied.id, params )
+    end    
+
+    def create params={}
+      @klass.create( @proxied.id, params )
     end
-    
   end
 
 end
