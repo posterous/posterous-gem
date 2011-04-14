@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+%w{postly irb}.each { |f| require f }
+
+$:.unshift(File.dirname(__FILE__) + '/../lib')
+
+Postly.config = {'username'=>'chris+test@posterous-inc.com','password' => 'testit!', 'api_token' => 'bkjyDkFHmunxBAgqEgkCcGtpaotnnclG'}
+
+include Postly
+
+puts "email:"
+username = gets.strip
+
+puts "password:"
+password = gets.strip
+
+puts "api_token:"
+token = gets.strip
+
+Postly.config = {'username'=> username,'password' => password, 'api_token' => token}
+
+
+IRB.setup(nil)
+irb = IRB::Irb.new
+
+IRB.conf[:MAIN_CONTEXT] = irb.context
+
+irb.context.evaluate("require 'irb/completion'", 0)
+
+trap("SIGINT") do
+  irb.signal_handle
+end
+
+catch(:IRB_EXIT) do
+  irb.eval_input
+end

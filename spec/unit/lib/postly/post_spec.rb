@@ -46,6 +46,6 @@ describe Postly::Post do
         }.should raise_error Postly::Connection::ConnectionError
       end
     end
-
   end
+
 end
