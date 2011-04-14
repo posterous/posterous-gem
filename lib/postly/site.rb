@@ -23,7 +23,7 @@ module Postly
     end
 
     def destroy
-      self.class.delete("/sites/#{self.id}")
+      self.class.post("/sites/#{self.id}", '_method' => 'delete')
     end
 
   end

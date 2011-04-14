@@ -19,7 +19,7 @@ describe Postly::Post do
   end
 
   describe "CRUD" do
-    before do
+    before(:all) do
       @post     = Post.create(@primary.id, {:title => 'from postly', :body => 'kittens are rad!'})
       @post_id  = @post.id
     end
@@ -30,8 +30,8 @@ describe Postly::Post do
       end
     end
 
-    describe "#update" do 
-      it "should update a post" do
+    describe "#save" do 
+      it "updates a post" do
         @post.title = 'updated via postly'
         @post.save
         @post.reload.title.should  == 'updated via postly'
@@ -39,7 +39,7 @@ describe Postly::Post do
     end
 
     describe "#destroy" do
-      it "should delete a post" do
+      it "deletes a post and raises a Connection error when not found" do
         @post.destroy
         lambda {
           Post.find(@primary.id, @post.id)

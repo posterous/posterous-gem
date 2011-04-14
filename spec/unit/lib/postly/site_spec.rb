@@ -4,39 +4,50 @@ describe Postly::Site do
   include Postly
 
   before(:all) do
-    @site     = Site.create(:hostname => "newpostly#{Time.now.to_i}")
     @primary  = Site.find('postertester')
   end
 
   it "should find the primary site" do
     @primary.name.should =~ /postertester/
   end
-
-  it "should have posts" do
-    @primary.posts.should be_an Array
-  end
-
-  it "should find all sites" do
-    @sites = Site.all(:page => 1)
-
-    @sites.should be_an Array
-  end
-
-  describe "creating and updating a site" do
   
-    it "should create a site" do
-      @site.name.should =~ /postly/
+  describe "#all" do
+    it "finds all the users sites" do
+      @sites = Site.all(:page => 1)
+      @sites.should be_an Array
+    end
+  end
+
+  describe "CRUD" do
+
+    before(:all) do
+      @site = Site.create(:hostname => "newpostly#{Time.now.to_i}")
+      @site_id = @site.id
+    end
+  
+    describe "#create" do
+      it "creates the site" do
+        @site.name.should =~ /postly/
+      end
+    end
+      
+    describe "#save" do
+      it "updates a site" do
+        @site.is_private = true
+        @site.save
+        @site.reload.is_private.should be_true
+      end
     end
 
-    it "should update a site" do
-      @site.is_private = true
-      @site.save
-      @site.reload.is_private.should be_true
+    describe "#destroy" do
+      it "deletes the site" do
+        @site.destroy.should be_nil
+        lambda {
+          Site.find(@site_id)
+        }.should raise_error Postly::Connection::ConnectionError
+      end
     end
-
-    it "should delete a site" do
-      @site.destroy.should be_nil
-    end
+    
   end
 
 end
