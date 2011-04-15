@@ -12,6 +12,7 @@ module Postly
   autoload :Site,       'postly/models/site'
   autoload :Post,       'postly/models/post'
   autoload :Comment,    'postly/models/comment'
+  autoload :Like,       'postly/models/like'
   
   extend self
 

@@ -40,6 +40,7 @@ describe Postly::Post do
 
     describe "#destroy" do
       it "deletes a post and raises a Connection error when not found" do
+        @count = @primary.posts.all.count
         @post.destroy
         lambda {
           @primary.posts.find(@post.id)

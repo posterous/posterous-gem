@@ -19,35 +19,35 @@ describe Postly::Comment do
     end
   end
 
-  #describe "CRUD" do
-    #before(:all) do
-      #@comment     = Comment.create(@primary.id, {:title => 'from commently', :body => 'kittens are rad!'})
-      #@comment_id  = @comment.id
-    #end
+  describe "CRUD" do
+    before(:all) do
+      @comment     = @post.comments.create({:body => 'kittens are rad!'})
+      @comment_id  = @comment.id
+    end
 
-    #describe "#create" do
-      #it "creates a comment" do
-        #@comment.title.should == 'from commently'
-      #end
-    #end
+    describe "#create" do
+      it "creates a comment" do
+        @comment.body.should == 'kittens are rad!'
+      end
+    end
 
-    #describe "#save" do 
-      #it "updates a comment" do
-        #@comment.title = 'updated via commently'
-        #@comment.save
-        #@comment.reload.title.should  == 'updated via commently'
-      #end
-    #end
+    describe "#save" do 
+      it "updates a comment" do
+        @comment.body = 'updated via commently'
+        @comment.save
+        @comment.reload.body.should  == 'updated via commently'
+      end
+    end
 
-    #describe "#destroy" do
-      #it "deletes a comment and raises a Connection error when not found" do
-        #@comment.destroy
-        #lambda {
-          #Comment.find(@primary.id, @comment.id)
-        #}.should raise_error Commently::Connection::ConnectionError
-      #end
-    #end
-  #end
+    describe "#destroy" do
+      it "deletes a comment and raises a Connection error when not found" do
+        @comment.destroy
+        lambda {
+          @post.comments.find(@comment.id)
+        }.should raise_error Postly::Connection::ConnectionError
+      end
+    end
+  end
 
 end
 

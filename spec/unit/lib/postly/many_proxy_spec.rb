@@ -26,12 +26,12 @@ describe Postly::ManyProxy do
     end
   end
 
-  #describe "#posts.create" do
-    #it "creates a post for the site" do
-      #post = @primary.posts.create(:title => 'from proxy')
-      #post.title.should == 'from proxy'
-      #post.destroy
-    #end
-  #end
+  describe "#posts.create" do
+    it "creates a post for the site" do
+      post = @primary.posts.create(:title => 'from proxy')
+      post.title.should == 'from proxy'
+      post.destroy
+    end
+  end
 
 end
