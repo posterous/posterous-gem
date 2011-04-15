@@ -9,7 +9,7 @@ describe Postly::Post do
 
   describe "#all" do
     before(:all) do
-      @posts = Post.all(@primary.id)
+      @posts = @primary.posts.all
     end
 
     it "finds the posts" do
@@ -20,7 +20,7 @@ describe Postly::Post do
 
   describe "CRUD" do
     before(:all) do
-      @post     = Post.create(@primary.id, {:title => 'from postly', :body => 'kittens are rad!'})
+      @post     = @primary.posts.create({:title => 'from postly', :body => 'kittens are rad!'})
       @post_id  = @post.id
     end
 
@@ -42,7 +42,7 @@ describe Postly::Post do
       it "deletes a post and raises a Connection error when not found" do
         @post.destroy
         lambda {
-          Post.find(@primary.id, @post.id)
+          @primary.posts.find(@post.id)
         }.should raise_error Postly::Connection::ConnectionError
       end
     end

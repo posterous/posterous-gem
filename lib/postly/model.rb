@@ -53,7 +53,7 @@ module Postly
     end
 
     def destroy
-      self.class.delete(parsed_resource_url + "#{self.id}")
+      self.class.delete(parsed_resource_url + "/#{self.id}")
     end
 
     def reload

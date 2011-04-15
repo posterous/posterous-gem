@@ -22,7 +22,7 @@ describe Postly::ManyProxy do
 
   describe "when chained" do
     it "should forward the finder opts" do
-      p @primary.posts.all.first.comments.all
+      @primary.posts.all.first.comments.all.should be_an Array
     end
   end
 

@@ -10,7 +10,7 @@ describe Postly::Comment do
 
   describe "#all" do
     before(:all) do
-      @comments = Comment.all(@primary.id, @post.id)
+      @comments = @post.comments.all
     end
 
     it "finds the comments" do
