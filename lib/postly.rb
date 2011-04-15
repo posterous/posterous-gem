@@ -10,14 +10,15 @@ module Postly
   autoload :Connection,   'postly/connection'
   autoload :Inheritable,  'postly/inheritable'
   autoload :Model,        'postly/model'
-  autoload :ManyProxy,    'postly/many_proxy'
   autoload :Site,         'postly/models/site'
+  autoload :Profile,      'postly/models/profile'
   autoload :Post,         'postly/models/post'
   autoload :Page,         'postly/models/page'
   autoload :Comment,      'postly/models/comment'
   autoload :Like,         'postly/models/like'
   autoload :Link,         'postly/models/link'
   autoload :LinkCategory, 'postly/models/link_category'
+  autoload :RelationshipProxy, 'postly/relationship_proxy'
 
   def config=(cfg)
     @config = case

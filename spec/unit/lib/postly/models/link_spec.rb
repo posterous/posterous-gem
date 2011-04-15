@@ -33,9 +33,9 @@ describe Postly::Link do
 
     describe "#save" do 
       it "updates a link" do
-        @comment.title = 'updated via postly'
-        @comment.save
-        @comment.reload.title.should  == 'updated via postly'
+        @link.title = 'updated via postly'
+        @link.save
+        @link.reload.title.should  == 'updated via postly'
       end
     end
 

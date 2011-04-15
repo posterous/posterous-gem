@@ -1,6 +1,5 @@
 module Postly
-
-  class ManyProxy
+  class RelationshipProxy
     attr_reader :klass, :proxied
     def initialize proxied, klass
       @klass              = klass
@@ -17,5 +16,4 @@ module Postly
       super(sym, *args, &block)
     end
   end
-
 end
