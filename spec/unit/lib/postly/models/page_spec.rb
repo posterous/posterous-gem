@@ -31,7 +31,7 @@ describe Postly::Page do
     end
 
     describe "#save" do 
-      it "updates a post" do
+      it "updates a page" do
         @page.title = 'updated via postly'
         @page.save
         @page.reload.title.should  == 'updated via postly'
@@ -39,7 +39,7 @@ describe Postly::Page do
     end
 
     describe "#destroy" do
-      it "deletes a post and raises a Connection error when not found" do
+      it "deletes a page and raises a Connection error when not found" do
         @count = @primary.pages.all.count
         @page.destroy
         lambda {

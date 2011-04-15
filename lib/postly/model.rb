@@ -66,7 +66,7 @@ module Postly
     
     def save
       return if hash_for_update.empty?
-      @struct = self.class.put(parsed_resource_url + "/#{self.id}", param_scope => hash_for_update )
+      @struct = self.class.post(parsed_resource_url + "/#{self.id}", { param_scope => hash_for_update, '_method' => 'put' } )
       changed_fields.clear
     end
 
