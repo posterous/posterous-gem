@@ -6,14 +6,15 @@ require 'ostruct'
 module Postly
   BASE_API_URL = 'http://posterous.com/api/v2'
 
-  autoload :Connection, 'postly/connection'
-  autoload :Model,      'postly/model'
-  autoload :ManyProxy,  'postly/many_proxy'
-  autoload :Site,       'postly/models/site'
-  autoload :Post,       'postly/models/post'
-  autoload :Page,       'postly/models/page'
-  autoload :Comment,    'postly/models/comment'
-  autoload :Like,       'postly/models/like'
+  autoload :Connection,   'postly/connection'
+  autoload :Inheritable,  'postly/inheritable'
+  autoload :Model,        'postly/model'
+  autoload :ManyProxy,    'postly/many_proxy'
+  autoload :Site,         'postly/models/site'
+  autoload :Post,         'postly/models/post'
+  autoload :Page,         'postly/models/page'
+  autoload :Comment,      'postly/models/comment'
+  autoload :Like,         'postly/models/like'
   
   extend self
 
