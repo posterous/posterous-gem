@@ -18,8 +18,17 @@ module Postly
     end
 
     def self.param_scope
-      self.to_s.split('::').last.downcase.to_sym
+      underscore(self.to_s.split('::').last).to_sym
     end
+
+    def self.underscore(camel_cased_word)
+      camel_cased_word.to_s.gsub(/::/, '/').
+        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+        gsub(/([a-z\d])([A-Z])/,'\1_\2').
+        tr("-", "_").
+        downcase
+    end
+    
 
     def param_scope
       self.class.param_scope
