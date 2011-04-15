@@ -1,10 +1,11 @@
-require 'typhoeus'
-require 'yaml'
-require 'json'
-require 'ostruct'
+%w[typhoeus yaml json ostruct].each { |lib| require lib }
 
 module Postly
   BASE_API_URL = 'http://posterous.com/api/v2'
+
+  extend self
+
+  attr_reader :config
 
   autoload :Connection,   'postly/connection'
   autoload :Inheritable,  'postly/inheritable'
@@ -15,10 +16,6 @@ module Postly
   autoload :Page,         'postly/models/page'
   autoload :Comment,      'postly/models/comment'
   autoload :Like,         'postly/models/like'
-  
-  extend self
-
-  attr_reader :config
 
   def config=(cfg)
     @config = case
