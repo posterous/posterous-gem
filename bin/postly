@@ -11,16 +11,16 @@ Postly.config = {'username'=>'chris+test@posterous-inc.com','password' => 'testi
 
 include Postly
 
-puts "email:"
-username = gets.strip
+#puts "email:"
+#username = gets.strip
 
-puts "password:"
-password = gets.strip
+#puts "password:"
+#password = gets.strip
 
-puts "api_token:"
-token = gets.strip
+#puts "api_token:"
+#token = gets.strip
 
-Postly.config = {'username'=> username,'password' => password, 'api_token' => token}
+#Postly.config = {'username'=> username,'password' => password, 'api_token' => token}
 
 
 IRB.setup(nil)

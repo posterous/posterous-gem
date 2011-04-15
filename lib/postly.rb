@@ -9,8 +9,9 @@ module Postly
   autoload :Connection, 'postly/connection'
   autoload :Model,      'postly/model'
   autoload :ManyProxy,  'postly/many_proxy'
-  autoload :Site,       'postly/site'
-  autoload :Post,       'postly/post'
+  autoload :Site,       'postly/models/site'
+  autoload :Post,       'postly/models/post'
+  autoload :Comment,    'postly/models/comment'
   
   extend self
 

@@ -1,16 +1,94 @@
 module Postly
+  module Inheritable
+    def inherited_attributes(*args)
+      @inherited_attributes ||= [:inherited_attributes]
+      @inherited_attributes += args
+      args.each do |arg|
+        class_eval %(
+          class << self; attr_accessor :#{arg} end
+        )
+      end
+      @inherited_attributes
+    end
+
+    def inherited(subclass)
+      @inherited_attributes.each do |inheritable_attribute|
+        instance_var = "@#{inheritable_attribute}"
+        subclass.instance_variable_set(instance_var, instance_variable_get(instance_var))
+      end
+    end
+  end
+
   class Model
+    extend Connection
+    extend Inheritable
 
-    extend Postly::Connection
+    attr_reader :struct, :resource_url
 
-    attr_reader :struct
+    inherited_attributes :finder_opts, :parent_resource, :resource_path
+    @finder_opts ||= {} 
 
     def self.many collection_name, klass
       define_method collection_name do
         return ManyProxy.new self, klass
       end
     end
-  
+
+    def self.all params={}
+      @posts ||= get( parsed_resource_url, params ).collect{|s| self.new(s) }
+    end
+
+    def self.find mid
+      new get( parsed_resource_url + "/#{mid}")
+    end
+
+    def self.create params={}
+      new post(parsed_resource_url, :post => params)
+    end
+    
+    def save
+      return if hash_for_update.empty?
+      @struct = self.class.put(parsed_resource_url + "/#{self.id}", :post => hash_for_update )
+      changed_fields.clear
+    end
+
+    def destroy
+      self.class.delete(parsed_resource_url + "#{self.id}")
+    end
+
+    def reload
+      self.class.find(self.id)
+    end
+
+    def self.parsed_resource_url
+      resource_path.gsub(/:\w+/) {|sym| finder_opts[sym.sub(/:/,'').to_sym] }
+    end
+
+    def parsed_resource_url
+      resource_path.gsub(/:\w+/) {|sym| finder_opts[sym.sub(/:/,'').to_sym] }
+    end
+
+    def self.resource path
+      @resource_path = path
+    end
+
+    def self.parent sym
+      @parent_resource = sym
+    end
+
+    def resource_path
+      self.class.resource_path
+    end
+
+    def parent_resource
+      self.class.parent_resource
+    end
+    
+
+    def finder_opts
+      self.class.finder_opts
+    end
+    
     def initialize struct
       @struct = struct
     end
