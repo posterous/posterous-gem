@@ -16,6 +16,7 @@ module Postly
   autoload :Page,         'postly/models/page'
   autoload :Comment,      'postly/models/comment'
   autoload :Like,         'postly/models/like'
+  autoload :Link,         'postly/models/link'
   autoload :LinkCategory, 'postly/models/link_category'
 
   def config=(cfg)

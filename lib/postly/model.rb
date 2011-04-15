@@ -28,7 +28,6 @@ module Postly
         tr("-", "_").
         downcase
     end
-    
 
     def param_scope
       self.class.param_scope
