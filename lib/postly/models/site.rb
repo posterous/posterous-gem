@@ -3,6 +3,7 @@ module Postly
   class Site < Postly::Model
     
     many :posts, Post
+    many :pages, Page
 
     def self.find id_or_hostname
       new get( "/sites/#{id_or_hostname}")

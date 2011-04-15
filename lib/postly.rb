@@ -11,6 +11,7 @@ module Postly
   autoload :ManyProxy,  'postly/many_proxy'
   autoload :Site,       'postly/models/site'
   autoload :Post,       'postly/models/post'
+  autoload :Page,       'postly/models/page'
   autoload :Comment,    'postly/models/comment'
   autoload :Like,       'postly/models/like'
   
