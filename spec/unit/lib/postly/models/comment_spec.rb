@@ -4,7 +4,7 @@ describe Postly::Comment do
   include Postly
 
   before(:all) do
-    @primary  = Site.find('postertester')
+    @primary  = Site.find('primary')
     @post     = @primary.posts.all.first
   end
 

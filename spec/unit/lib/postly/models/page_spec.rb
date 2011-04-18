@@ -4,7 +4,7 @@ describe Postly::Page do
   include Postly
 
   before(:all) do
-    @primary = Site.find('postertester')
+    @primary = Site.find('primary')
   end
 
   describe "#all" do

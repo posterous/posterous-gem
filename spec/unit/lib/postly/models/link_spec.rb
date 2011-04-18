@@ -4,7 +4,7 @@ describe Postly::Link do
   include Postly
 
   before(:all) do
-    @primary        = Site.find('postertester')
+    @primary        = Site.find('primary')
     @link_category  = @primary.link_categories.all.first
   end
 

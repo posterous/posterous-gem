@@ -6,11 +6,16 @@ module Postly
     attr_reader :struct
 
     def self.all params={}
-      get( parsed_resource_url, params ).collect{|s| self.new(s) }
+      result = get( parsed_resource_url, params )
+      result.is_a?(Array) ? result.collect{|s| self.new(s) } : self.new(result)
     end
 
     def self.find mid
       new get( parsed_resource_url + "/#{mid}")
+    end
+
+    def self.load
+      new get(parsed_resource_url)
     end
 
     def self.create params={}
