@@ -6,12 +6,11 @@ module Postly
     many :posts,            Post
     many :pages,            Page
     many :link_categories,  LinkCategory    
+    many :external_sites,   ExternalSite
 
     def self.primary
       find('primary')
     end
-    def self.first
-      find('first')
-    end
+    
   end
 end

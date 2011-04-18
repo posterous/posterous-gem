@@ -7,18 +7,20 @@ module Postly
 
   attr_reader :config
 
-  autoload :Connection,   'postly/connection'
-  autoload :Inheritable,  'postly/inheritable'
-  autoload :Model,        'postly/model'
-  autoload :Site,         'postly/models/site'
-  autoload :Profile,      'postly/models/profile'
-  autoload :Post,         'postly/models/post'
-  autoload :Page,         'postly/models/page'
-  autoload :Comment,      'postly/models/comment'
-  autoload :Like,         'postly/models/like'
-  autoload :Link,         'postly/models/link'
-  autoload :LinkCategory, 'postly/models/link_category'
-  autoload :RelationshipProxy, 'postly/relationship_proxy'
+  autoload :Connection,         'postly/connection'
+  autoload :Inheritable,        'postly/inheritable'
+  autoload :Model,              'postly/model'
+  autoload :Site,               'postly/models/site'
+  autoload :Profile,            'postly/models/profile'
+  autoload :Post,               'postly/models/post'
+  autoload :Page,               'postly/models/page'
+  autoload :Comment,            'postly/models/comment'
+  autoload :Like,               'postly/models/like'
+  autoload :Link,               'postly/models/link'
+  autoload :LinkCategory,       'postly/models/link_category'
+  autoload :ExternalSite,       'postly/models/external_site'
+  autoload :RelationshipProxy,  'postly/relationship_proxy'
+
 
   def config=(cfg)
     @config = case
