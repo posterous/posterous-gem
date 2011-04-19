@@ -4,11 +4,33 @@
 
     gem install posterous
     
+## Basic Usage ##
+    
+    require 'posterous'
+    
+    Posterous.config = {
+      'username' => <username>,
+      'password' => <password>,
+      'api_token' => '<api_token>'
+    }
+    
+    include Posterous
+    
+    ### Sites ###
+    p Site.all
+    p Site.primary
+    p Site.find('twoism')
+    
+    ### Posts ###
+    p Site.primary.posts
+    p Site.primary.posts.create(:title => 'New Post', :body => 'From posterous API', :media => [File.open('/path/to/file')])
+
+    
 ## Interactive Console Usage ##
 
   In your terminal type...
   
-    $ postly
+    $ posterous
     
   You will then be walked through the setup process. Type `newb` to get some help.
     
