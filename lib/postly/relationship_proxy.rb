@@ -1,19 +1,30 @@
 module Postly
   class RelationshipProxy
     attr_reader :klass, :proxied
-    def initialize proxied, klass
-      @klass              = klass
-      @proxied            = proxied
 
-      @klass.finder_opts[klass.parent_resource] = proxied.id
-      @klass.finder_opts.merge!(@proxied.finder_opts)
+    instance_methods.each { |m| undef_method m unless m.to_s =~ /^(?:nil\?|send|object_id|to_a)$|^__|^respond_to|proxy_/ }
+    
+    def initialize proxied, klass, association_type
+      @association_klass  = klass
+      @proxied            = proxied
+      @association = nil
+      @association_klass.finder_opts[klass.parent_resource] = proxied.id
+      @association_klass.finder_opts.merge!(@proxied.finder_opts)
+
+      load_method   =  association_type == :many ? :all : :load
+      @association  = @association_klass.send(load_method)
     end
 
     def method_missing sym, *args, &block
-      if klass.respond_to? sym
-        return klass.send(sym,*args, &block)
+      [@association, @association_klass].each do |obj|
+        return obj.send(sym, *args, &block) if obj.respond_to?(sym)
       end
       super(sym, *args, &block)
     end
+    
+    def respond_to?(*args)
+      [@association, @association_klass].any?{|o| o.respond_to?(*args) }
+    end
+     
   end
 end

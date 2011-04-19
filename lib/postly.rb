@@ -19,6 +19,7 @@ module Postly
   autoload :Link,               'postly/models/link'
   autoload :LinkCategory,       'postly/models/link_category'
   autoload :ExternalSite,       'postly/models/external_site'
+  autoload :Subscriber,         'postly/models/subscriber'
   autoload :RelationshipProxy,  'postly/relationship_proxy'
 
 

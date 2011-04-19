@@ -7,7 +7,7 @@ module Postly
 
     def self.all params={}
       result = get( parsed_resource_url, params )
-      result.is_a?(Array) ? result.collect{|s| self.new(s) } : self.new(result)
+      result.collect{|s| self.new(s) }
     end
 
     def self.find mid
@@ -72,6 +72,10 @@ module Postly
       Hash[changed_fields.collect{ |f| [f, self.send(f)] }]
     end
 
+    def respond_to? *args
+      struct.respond_to?(*args) || super
+    end
+
     def method_missing sym, *args, &block
       if struct.respond_to? sym
         changed_fields.push(sym.to_s.sub('=','').to_sym) if sym.to_s =~ /=/
@@ -79,6 +83,10 @@ module Postly
       end
       super(sym, *args, &block)
     end   
+
+    def inspect
+      "<#{self} #{struct.send(:table).to_s} >"
+    end
 
   end
 end

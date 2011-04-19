@@ -40,11 +40,15 @@ module Postly
 
       def many collection_name, klass
         define_method collection_name do
-          RelationshipProxy.new self, klass
+          RelationshipProxy.new self, klass, :many
         end
       end
 
-      alias_method :one, :many
+      def one collection_name, klass
+        define_method collection_name do
+          RelationshipProxy.new self, klass, :one
+        end
+      end
 
     end
 

@@ -7,6 +7,7 @@ module Postly
     many :pages,            Page
     many :link_categories,  LinkCategory    
     many :external_sites,   ExternalSite
+    many :subscribers,      Subscriber
 
     def self.primary
       find('primary')
