@@ -37,7 +37,7 @@ module Postly
                       default_options.merge!(:params => default_params.merge!(params)))
         result    = parse(response.body)
         
-        #puts "POSTLY :: #{response.body}\n\n" if ENV['POSTLY_DEBUG']
+        puts "POSTLY :: #{response.body}\n\n" if ENV['POSTLY_DEBUG']
 
         unless [200,201].include?(response.code)
           msg = result.nil? ? response.body : "#{result.error} #{result.message}"
