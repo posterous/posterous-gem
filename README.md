@@ -10,7 +10,7 @@
   
     $ postly
     
-    # You will be walked through the setup process
+  You will then be walked through the setup process. Type `newb` to get some help.
     
     ****************************************************************************************************
     Hi <username>, welcome to the Posterous API Console! For help type `newb`.
