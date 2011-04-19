@@ -4,7 +4,7 @@ module Postly
 
     instance_methods.each { |m| undef_method m unless m.to_s =~ /^(?:nil\?|send|object_id|to_a)$|^__|^respond_to|proxy_/ }
     
-    def initialize proxied, klass, association_type
+    def initialize proxied, klass, association_type, *args
       @association_klass  = klass
       @proxied            = proxied
       @association = nil
@@ -12,7 +12,7 @@ module Postly
       @association_klass.finder_opts.merge!(@proxied.finder_opts)
 
       load_method   =  association_type == :many ? :all : :load
-      @association  = @association_klass.send(load_method)
+      @association  = @association_klass.send(load_method, *args)
     end
 
     def method_missing sym, *args, &block
