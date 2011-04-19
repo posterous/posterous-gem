@@ -40,13 +40,13 @@ module Postly
 
       def many collection_name, klass
         define_method collection_name do |*args|
-          RelationshipProxy.new self, klass, :many, *args
+          AssociationProxy.new self, klass, :many, *args
         end
       end
 
       def one collection_name, klass
         define_method collection_name do |*args|
-          RelationshipProxy.new self, klass, :one, *args
+          AssociationProxy.new self, klass, :one, *args
         end
       end
 

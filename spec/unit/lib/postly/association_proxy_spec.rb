@@ -1,6 +1,6 @@
 require 'helper'
 
-describe Postly::RelationshipProxy do
+describe Postly::AssociationProxy do
   include Postly
 
   before(:all)  do

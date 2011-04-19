@@ -85,7 +85,7 @@ module Postly
     end   
 
     def inspect
-      "<#{self} #{struct.send(:table).to_s} >"
+      "<#{self} #{struct.send(:table).to_s}>"
     end
 
   end
