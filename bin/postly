@@ -1,27 +1,32 @@
 #!/usr/bin/env ruby
 
+RC_PATH = "#{ENV['HOME']}/.posterousrc"
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 %w{postly irb}.each { |f| require f }
 
-$:.unshift(File.dirname(__FILE__) + '/../lib')
+rc  = File.open(RC_PATH,File::RDWR|File::APPEND|File::CREAT)
+yml = YAML.load_file(rc)
 
-Postly.config = {'username'=>'chris+test@posterous-inc.com','password' => 'testit!', 'api_token' => 'bkjyDkFHmunxBAgqEgkCcGtpaotnnclG'}
+if yml.is_a?(Hash)
+  cfg = yml
+else
+  cfg = {}
+  puts "Email Address:"
+  cfg['username'] = gets.chomp
+  puts "Password:"
+  cfg['password'] = gets.chomp
+  puts "Api Token:"
+  cfg['api_token'] = gets.chomp
+  rc.puts cfg.to_yaml
+end
+
+rc.close
+
+Postly.config = cfg
 
 include Postly
-
-#puts "email:"
-#username = gets.strip
-
-#puts "password:"
-#password = gets.strip
-
-#puts "api_token:"
-#token = gets.strip
-
-#Postly.config = {'username'=> username,'password' => password, 'api_token' => token}
-
 
 IRB.setup(nil)
 irb = IRB::Irb.new
