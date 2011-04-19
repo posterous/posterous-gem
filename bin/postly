@@ -28,6 +28,11 @@ Postly.config = cfg
 
 include Postly
 
+@user = User.me
+puts "*"*100
+puts "Hi #{@user.nickname}, welcome to the Posterous API Console!\n"
+puts "*"*100
+
 IRB.setup(nil)
 irb = IRB::Irb.new
 
