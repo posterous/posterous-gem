@@ -17,7 +17,7 @@ module Postly
     end
 
     def method_missing sym, *args, &block
-      [@association, @association_klass].each do |assoc|
+      [@association_klass, @association].each do |assoc|
         return assoc.send(sym, *args, &block) if assoc.respond_to?(sym)
       end
       super(sym, *args, &block)
@@ -25,6 +25,10 @@ module Postly
     
     def respond_to?(*args)
       [@association, @association_klass].any?{|a| a.respond_to?(*args) }
+    end
+
+    def new
+      @association_klass.new
     end
      
   end
