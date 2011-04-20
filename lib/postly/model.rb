@@ -5,27 +5,42 @@ module Postly
     
     attr_reader :struct
 
+    # Get a collection for a model
+    #
+    # Site.posts.all(:page => 1)
     def self.all params={}
       result = get( parsed_resource_url, params )
       result.collect{|s| self.new(s) }
     end
 
+    # Get a model from a collection by its id.
+    #
+    # Site.primary.posts.find(123)
+    # Site.find(123)
     def self.find mid
       new get( parsed_resource_url + "/#{mid}")
     end
 
+    # loads the model data from the server and
+    # instantiates a new instance of its class
+    #
+    # Site.primary.profile.load
     def self.load
       new get(parsed_resource_url)
     end
 
-    def self.create params={}
-      new post(parsed_resource_url, param_scope => params)
-    end
-
+    # Used to scope query params for a given model
+    #
+    # Posterous::ExternalSite => external_site
     def self.param_scope
       underscore(self.to_s.split('::').last).to_sym
     end
 
+    def param_scope
+      self.class.param_scope
+    end
+    
+    # lifted from ActiveSupport.
     def self.underscore(camel_cased_word)
       camel_cased_word.to_s.gsub(/::/, '/').
         gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
@@ -34,8 +49,16 @@ module Postly
         downcase
     end
 
-    def param_scope
-      self.class.param_scope
+    # Creates a new model with the given params.
+    # Converts a :media array into a hash to make
+    # the Rails app happy.
+    #
+    # Site.primary.posts.create(:title => 'Awesome!', :media => [File.open('../some/path')])
+    def self.create params={}
+      media_array = params.delete(:media)
+      media       = Hash[media_array.each_with_index.map{|v,i| [i,v] }] unless media_array.nil?
+
+      new post(parsed_resource_url, param_scope => params, :media => media)
     end
     
     def save
