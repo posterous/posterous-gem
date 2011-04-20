@@ -21,6 +21,7 @@ module Postly
   autoload :LinkCategory,       'postly/models/link_category'
   autoload :ExternalSite,       'postly/models/external_site'
   autoload :Subscriber,         'postly/models/subscriber'
+  autoload :Subscription,       'postly/models/subscription'
   autoload :AssociationProxy,   'postly/association_proxy'
 
 
