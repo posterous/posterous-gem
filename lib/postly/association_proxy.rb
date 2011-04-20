@@ -17,6 +17,8 @@ module Postly
     end
 
     def method_missing sym, *args, &block
+      p "passing: #{sym}"
+
       [@association_klass, @association].each do |assoc|
         return assoc.send(sym, *args, &block) if assoc.respond_to?(sym)
       end
@@ -29,6 +31,10 @@ module Postly
 
     def new
       @association_klass.new
+    end
+
+    def inspect
+      @association.inspect
     end
      
   end

@@ -31,7 +31,7 @@ module Postly
 
     [:get, :post, :put, :delete].each do |verb|
       define_method verb do |path, params={}|
-        puts "POSTLY :: #{verb.upcase} #{path} #{params}\n\n" if ENV['POSTLY_DEBUG']
+        puts "POSTLY :: #{verb.upcase} #{path} #{params}\n\n" #if ENV['POSTLY_DEBUG']
 
         response  = http.send(verb, "#{Postly::BASE_API_URL}#{path}", 
                       default_options.merge!(:params => default_params.merge!(params)))
