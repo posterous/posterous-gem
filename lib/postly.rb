@@ -10,6 +10,7 @@ module Postly
   autoload :Connection,         'postly/connection'
   autoload :Inheritable,        'postly/inheritable'
   autoload :Model,              'postly/model'
+  autoload :Tag,                'postly/models/tag'
   autoload :User,               'postly/models/user'
   autoload :Site,               'postly/models/site'
   autoload :Profile,            'postly/models/profile'

@@ -3,6 +3,7 @@ module Postly
     resource "/sites"
 
     one  :profile,          Profile
+    many :tags,             Tag
     many :posts,            Post
     many :pages,            Page
     many :link_categories,  LinkCategory    
@@ -11,6 +12,10 @@ module Postly
 
     def self.primary
       find('primary')
+    end
+
+    def photos
+      self.class.get(parsed_resource_url + "#{self.id}/photos")
     end
     
   end
