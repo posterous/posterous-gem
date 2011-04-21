@@ -26,8 +26,6 @@ describe Postly::ExternalSite do
         :username     => 'foo'
       })
       @external_site_id  = @external_site.id
-
-      p @external_site
     end
 
     describe "#create" do

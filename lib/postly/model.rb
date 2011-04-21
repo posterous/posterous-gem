@@ -26,7 +26,7 @@ module Postly
     #
     # Site.primary.profile.load
     def self.load
-      new get(parsed_resource_url)
+      new get(parsed_resource_url) rescue self.new(OpenStruct.new)
     end
 
     # Used to scope query params for a given model
