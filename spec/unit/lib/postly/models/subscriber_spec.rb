@@ -33,7 +33,7 @@ describe Postly::Subscriber do
 
     describe "#destroy" do
       it "deletes a subscriber and raises a Connection error when not found" do
-        @primary.subscribers.destroy(FAKE_USER_ID)
+        @primary.subscribers.first.destroy
         lambda {
           @primary.subscribers.find(FAKE_USER_ID)
         }.should raise_error Postly::Connection::ConnectionError
