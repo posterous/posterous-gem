@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+RC_PATH   = "#{ENV['HOME']}/.posterousrc"
+HELP_DOC  = <<DOC
+## API Help ##
+
+# Get your primary site
+> Site.primary
+=> <#<Posterous::Site:0x000001013e9b88> ... }>
+
+# Get all your sites
+> Site.all
+=> [<#<Posterous::Site:0x000001013e9b88> ... }>]
+
+# Get any public site
+> Site.find('twoism')
+=> <#<Posterous::Site:0x000001013e9b88> ... }>
+
+# Get some posts
+> s = Site.primary
+> s.posts(:page => 1)
+=> [<#<Posterous::Post:0x0000010138ced8> ... }>]
+
+# Create a post and add a comment to it
+> s = Site.primary
+> post = s.posts.create(:title => 'Woo Hoo!')
+ => <#<Posterous::Post:0x00000101398670> 
+> post.comments.create(:body => 'Kittens are radical!')
+=> <#<Posterous::Comment:0x0000010135f758> ... }>
+DOC
+
+def newb
+  puts HELP_DOC
+end
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+%w{posterous irb}.each { |f| require f }
+
+rc  = File.open(RC_PATH,File::RDWR|File::APPEND|File::CREAT)
+yml = YAML.load_file(rc)
+
+if yml.is_a?(Hash)
+  cfg = yml
+else
+  cfg = {}
+  puts "Email Address:"
+  cfg['username'] = gets.chomp
+  puts "Password:"
+  cfg['password'] = gets.chomp
+  puts "Api Token:"
+  cfg['api_token'] = gets.chomp
+  rc.puts cfg.to_yaml
+end
+
+rc.close
+
+Posterous.config = cfg
+
+include Posterous
+
+@user = User.me
+puts "*"*100
+puts "Hi #{@user.nickname}, welcome to the Posterous API Console! For help type `newb`.\n"
+puts "*"*100
+
+IRB.setup(nil)
+irb = IRB::Irb.new
+
+IRB.conf[:MAIN_CONTEXT] = irb.context
+
+irb.context.evaluate("require 'irb/completion'", 0)
+
+trap("SIGINT") do
+  irb.signal_handle
+end
+
+catch(:IRB_EXIT) do
+  irb.eval_input
+end
