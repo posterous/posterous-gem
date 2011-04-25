@@ -4,6 +4,11 @@ module Posterous
     extend Connection
     
     attr_reader :struct
+    
+    # hack for ruby 1.8.7 
+    def id
+      self.struct.send(:table)[:id]
+    end
 
     # Get a collection for a model
     #
