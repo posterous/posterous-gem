@@ -37,8 +37,12 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 %w{posterous irb}.each { |f| require f }
 
-rc  = File.open(RC_PATH,File::RDWR|File::APPEND|File::CREAT)
-yml = YAML.load_file(rc)
+if File.exists?(RC_PATH)
+  rc = File.open(RC_PATH, 'r')
+  yml = YAML.load_file(RC_PATH)
+else
+  rc = File.open(RC_PATH, 'w')
+end
 
 if yml.is_a?(Hash)
   cfg = yml

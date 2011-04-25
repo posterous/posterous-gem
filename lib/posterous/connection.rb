@@ -30,7 +30,10 @@ module Posterous
     end
 
     [:get, :post, :put, :delete].each do |verb|
-      define_method verb do |path, params={}|
+      define_method verb do |path, *args|
+
+        params = args.last || {}
+
         puts "POSTLY :: #{verb.upcase} #{path} #{params}\n\n" if ENV['POSTLY_DEBUG']
 
         response  = http.send(verb, "#{Posterous::BASE_API_URL}#{path}", 
