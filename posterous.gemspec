@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Christopher Burnett @twoism"]
   s.email       = ["signalstatic@gmail.com"]
-  s.homepage    = "http://rubygems.org/gems/posterous"
+  s.homepage    = "http://github.com/posterous/posterous-gem"
   s.summary     = %q{Ruby wrapper for the Posterous REST API}
-  s.description = %q{Ruby wrapper for the Posterous REST API v2}
+  s.description = %q{Official Ruby wrapper for the Posterous REST API}
 
   s.rubyforge_project = "posterous"
 
