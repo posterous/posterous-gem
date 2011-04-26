@@ -4,6 +4,18 @@ module Posterous
     extend Connection
     
     attr_reader :struct
+
+    def self.many collection_name, klass
+      define_method collection_name do |*args|
+        AssociationProxy.new self, klass, :many, *args
+      end
+    end
+
+    def self.one collection_name, klass
+      define_method collection_name do |*args|
+        AssociationProxy.new self, klass, :one, *args
+      end
+    end
     
     # hack for ruby 1.8.7 
     def id

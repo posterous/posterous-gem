@@ -38,18 +38,6 @@ module Posterous
         @parent_resource = sym
       end
 
-      def many collection_name, klass
-        define_method collection_name do |*args|
-          AssociationProxy.new self, klass, :many, *args
-        end
-      end
-
-      def one collection_name, klass
-        define_method collection_name do |*args|
-          AssociationProxy.new self, klass, :one, *args
-        end
-      end
-
     end
 
     module InstanceMethods
