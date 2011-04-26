@@ -40,13 +40,24 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 rc  = File.exists?(RC_PATH) ? File.open(RC_PATH, 'r') : File.open(RC_PATH, 'w')
 yml = YAML.load_file(RC_PATH)
 
-cfg = yml.is_a?(Hash) ? yml : Hash[{
-    'Email Address:'  => 'username', 
-    'Password:'       => 'password', 
-    'Api Token:'      => 'api_token'
-  }.map{|k,v| 
-    puts k; [v,gets.chomp] 
-}]
+if yml.is_a?(Hash)
+  cfg = yml
+else
+  cfg = {}
+  puts "Email Address:"
+  cfg['username'] = gets.chomp
+  begin
+    puts "Password:"
+    system('stty -echo')
+    cfg['password'] = gets.chomp
+  rescue
+  ensure
+    system('stty echo')
+  end
+  puts "Api Token:"
+  cfg['api_token'] = gets.chomp
+  rc.puts cfg.to_yaml
+end
 
 rc.puts cfg.to_yaml
 rc.close
