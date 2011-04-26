@@ -37,35 +37,30 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 %w{posterous irb}.each { |f| require f }
 
-if File.exists?(RC_PATH)
-  rc = File.open(RC_PATH, 'r')
-  yml = YAML.load_file(RC_PATH)
-else
-  rc = File.open(RC_PATH, 'w')
-end
+rc  = File.exists?(RC_PATH) ? File.open(RC_PATH, 'r') : File.open(RC_PATH, 'w')
+yml = YAML.load_file(RC_PATH)
 
-if yml.is_a?(Hash)
-  cfg = yml
-else
-  cfg = Hash[{
+cfg = yml.is_a?(Hash) ? yml : Hash[{
     'Email Address:'  => 'username', 
     'Password:'       => 'password', 
     'Api Token:'      => 'api_token'
   }.map{|k,v| 
-      puts k; [v,gets.chomp] 
-  }]
-  rc.puts cfg.to_yaml
-end
+    puts k; [v,gets.chomp] 
+}]
 
+rc.puts cfg.to_yaml
 rc.close
 
 Posterous.config = cfg
 
 include Posterous
 
-@user = User.me
+def current_user
+  @current_user ||= User.me
+end
+
 puts "*"*100
-puts "Hi #{@user.nickname}, welcome to the Posterous API Console! For help type `newb`.\n"
+puts "Hi #{current_user.nickname}, welcome to the Posterous API Console! For help type `newb`.\n"
 puts "*"*100
 
 IRB.setup(nil)
