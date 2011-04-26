@@ -9,14 +9,18 @@
     gem install posterous
     
 ## Setup ##
-    
-    require 'posterous'
-    
-    Posterous.config = {
-      'username'  => <username>,
-      'password'  => <password>,
-      'api_token' => '<api_token>'
-    }
+   
+```ruby
+require 'posterous'
+
+Posterous.config = {
+  'username'  => <username>,
+  'password'  => <password>,
+  'api_token' => '<api_token>'
+}
+
+include Posterous
+```
 
 ## API ##
 
