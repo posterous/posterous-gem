@@ -1,5 +1,9 @@
 # Posterous #
 
+## Dependencies ##
+
+  Typhoeus [https://github.com/dbalatero/typhoeus](https://github.com/dbalatero/typhoeus)
+
 ## Installation ##
 
     gem install posterous
@@ -16,7 +20,7 @@
 
 ## API ##
 
-### User ###
+## User ##
 
   **Current user info**
   
@@ -43,7 +47,7 @@
     > @user.subscriptions.posts(:page => 1)
     => [<#<Posterous::Post:0x00000100c2c7b0>...] 
 
-### Sites ###
+## Sites ##
 
   **Find a primary site**
   
@@ -77,7 +81,7 @@
     => @site.destroy
 
 
-### Posts ###
+## Posts ##
 
   **Creating Posts**
 
@@ -105,23 +109,23 @@
     # paginated since a given id
     > @site.posts(:page => 3, :since_id => 123)
 
-### Commenting ###
+## Commenting ##
 
     > @site = Site.find('someawesomesite')
     > @site.posts.first.comments.create(:body => "Yes, kittens are very
     > radical")
 
-### Liking ###
+## Liking ##
 
     > @site = Site.find('someawesomesite')
     > @site.posts.first.likes.create
 
-### Subscribers ###
+## Subscribers ##
 
     > @site = Site.find('someawesomesite')
     > @site.subscribers(:page => 1)
 
-### External Sites / Autopost ###
+## External Sites / Autopost ##
 
     > @site.external_sites(:page => 1)
     => [<#<Posterous::ExternalSite:0x00000100c2c7b0>]
