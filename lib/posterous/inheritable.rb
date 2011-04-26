@@ -6,7 +6,7 @@ module Posterous
         extend ClassMethods
         include InstanceMethods
 
-        inherited_attributes :finder_opts, :parent_resource, :resource_path
+        inherited_attributes :finder_opts, :resource_path
         @finder_opts ||= {} 
       end  
     end
@@ -34,19 +34,11 @@ module Posterous
         @resource_path = path
       end
 
-      def parent sym
-        @parent_resource = sym
-      end
-
     end
 
     module InstanceMethods
       def resource_path
         self.class.resource_path
-      end
-
-      def parent_resource
-        self.class.parent_resource
       end
       
       def finder_opts

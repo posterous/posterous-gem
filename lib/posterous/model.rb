@@ -99,6 +99,10 @@ module Posterous
     def parsed_resource_url
       self.class.parsed_resource_url     
     end
+
+    def self.resource_url_keys
+      resource_path.scan(/:(\w+)/).flatten.collect(&:to_sym)
+    end
         
     def initialize struct
       @struct = struct

@@ -1,6 +1,5 @@
 module Posterous
   class Profile < Posterous::Model
-    parent    :site_id
     resource  "/sites/:site_id/profile"
 
     def self.param_scope

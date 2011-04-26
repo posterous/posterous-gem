@@ -9,7 +9,7 @@ module Posterous
       @proxied            = proxied
       @association        = nil
 
-      @association_klass.finder_opts[klass.parent_resource] = proxied.id
+      @association_klass.finder_opts[klass.resource_url_keys.last] = proxied.id
       @association_klass.finder_opts.merge!(@proxied.finder_opts)
 
       load_method   =  association_type == :many ? :all : :load
