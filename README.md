@@ -40,6 +40,7 @@
     => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>
     
   Find a Site by its hostname
+
     > Site.find('twoism')
     => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>
 
@@ -60,6 +61,7 @@
     => @site.save
 
   Deleting a Site
+
     > @site = Site.find('sitetodelete')
     => @site.destroy
 
