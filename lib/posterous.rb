@@ -1,28 +1,5 @@
 %w[typhoeus yaml json ostruct].each { |lib| require lib }
 
-require 'pathname'
-
-dir = Pathname(__FILE__).dirname.expand_path
-
-require dir + 'posterous/connection'
-require dir + 'posterous/inheritable'
-require dir + 'posterous/model'
-require dir + 'posterous/models/tag'
-require dir + 'posterous/models/subscriber'
-require dir + 'posterous/models/subscription'
-require dir + 'posterous/models/comment'
-require dir + 'posterous/models/like'
-require dir + 'posterous/models/post'
-require dir + 'posterous/models/page'
-require dir + 'posterous/models/link'
-require dir + 'posterous/models/link_category'
-require dir + 'posterous/models/external_site'
-require dir + 'posterous/models/user'
-require dir + 'posterous/models/profile'
-require dir + 'posterous/models/site'
-require dir + 'posterous/association_proxy'
-
-
 module Posterous
   BASE_API_URL = 'http://posterous.com/api/v2'
 
