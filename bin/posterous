@@ -50,8 +50,14 @@ else
   cfg = {}
   puts "Email Address:"
   cfg['username'] = gets.chomp
-  puts "Password:"
-  cfg['password'] = gets.chomp
+  begin
+    puts "Password:"
+    system('stty -echo')
+    cfg['password'] = gets.chomp
+  rescue
+  ensure
+    system('stty echo')
+  end
   puts "Api Token:"
   cfg['api_token'] = gets.chomp
   rc.puts cfg.to_yaml
