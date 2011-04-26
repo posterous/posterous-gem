@@ -47,13 +47,13 @@ end
 if yml.is_a?(Hash)
   cfg = yml
 else
-  cfg = {}
-  puts "Email Address:"
-  cfg['username'] = gets.chomp
-  puts "Password:"
-  cfg['password'] = gets.chomp
-  puts "Api Token:"
-  cfg['api_token'] = gets.chomp
+  cfg = Hash[{
+    'Email Address:'  => 'username', 
+    'Password:'       => 'password', 
+    'Api Token:'      => 'api_token'
+  }.map{|k,v| 
+      puts k; [v,gets.chomp] 
+  }]
   rc.puts cfg.to_yaml
 end
 
