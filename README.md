@@ -18,49 +18,60 @@
 
 ### User ###
 
-  Current user info
+  **Current user info**
   
     > User.me
     => <#<Posterous::User:0x00000100cacbe0> {:last_activity=>"2011/04/25 20:33:50 -0700",
     :nickname=>"postertester", :lastname=>nil, :id=>1288737, :firstname=>nil, 
     :profile_pic=>"http://posterous.com/images/profile/unknown75.gif"}>
   
-  Favorites
+  **Favorites**
 
     > @user = User.me
     > @user.favorites(:page => 1)
     => [<#<Posterous::Post:0x00000100c2c7b0>...] 
 
+  **Subscriptions**
+
+    > @user = User.me
+    > @user.subscriptions(:page => 1)
+    => [<#<Posterous::Site:0x00000100c2c7b0>...] 
+
+  **Subscription Posts**
+
+    > @user = User.me
+    > @user.subscriptions.posts(:page => 1)
+    => [<#<Posterous::Post:0x00000100c2c7b0>...] 
 
 ### Sites ###
 
-  Find a primary site
+  **Find a primary site**
   
     > Site.primary
     => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>
     
-  Find a Site by its hostname
+  **Find a Site by its hostname**
 
     > Site.find('twoism')
     => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>
 
-  Find all of the current user's Sites
+  **Find all of the current user's Sites**
 
     > Site.all(:page => 1)
     => [<#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>]
 
-  Creating a new Site
+  **Creating a new Site**
 
     > @site = Site.create(:hostname => 'superawesome',:is_private => false)
     => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"superawesome's posterous" ... }>
 
-  Updating a Site
+  **Updating a Site**
     
     > @site = Site.primary
     => @site.hostname = 'anotherawesomesite'
     => @site.save
 
-  Deleting a Site
+  **Deleting a Site**
 
     > @site = Site.find('sitetodelete')
     => @site.destroy
@@ -68,25 +79,25 @@
 
 ### Posts ###
 
-  Creating Posts
+  **Creating Posts**
 
     > @site = Site.primary
     > @post = @site.posts.create(:title => 'New Post', :body => 'From posterous API', 
-    :media => [File.open('/path/to/file')])
+    :media => [File.open('/path/to/file')], :autopost => true)
     => <#<Posterous::Post:0x00000100c2c7b0>
 
-  Updating Posts
+  **Updating Posts**
   
     > @post = @site.posts.find(<id>)
     > @post.title = 'Kittens are radical!'
     > @post.save
 
-  Deleting Posts
+  **Deleting Posts**
   
     > @post = @site.posts.find(<id>)
     > @post.destroy
 
-  Retrieving Posts
+  **Retrieving Posts**
 
     # paginated
     > @site.posts(:page => 1)
@@ -94,7 +105,27 @@
     # paginated since a given id
     > @site.posts(:page => 3, :since_id => 123)
 
-    
+### Commenting ###
+
+    > @site = Site.find('someawesomesite')
+    > @site.posts.first.comments.create(:body => "Yes, kittens are very
+    > radical")
+
+### Liking ###
+
+    > @site = Site.find('someawesomesite')
+    > @site.posts.first.likes.create
+
+### Subscribers ###
+
+    > @site = Site.find('someawesomesite')
+    > @site.subscribers(:page => 1)
+
+### External Sites / Autopost ###
+
+    > @site.external_sites(:page => 1)
+    => [<#<Posterous::ExternalSite:0x00000100c2c7b0>]
+
 ## Interactive Console Usage ##
 
   In your terminal type...
