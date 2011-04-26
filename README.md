@@ -4,26 +4,93 @@
 
     gem install posterous
     
-## Basic Usage ##
+## Setup ##
     
     require 'posterous'
     
     Posterous.config = {
-      'username' => <username>,
-      'password' => <password>,
+      'username'  => <username>,
+      'password'  => <password>,
       'api_token' => '<api_token>'
     }
+
+## API ##
+
+### User ###
+
+  Current user info
+  
+    > User.me
+    => <#<Posterous::User:0x00000100cacbe0> {:last_activity=>"2011/04/25 20:33:50 -0700",
+    :nickname=>"postertester", :lastname=>nil, :id=>1288737, :firstname=>nil, 
+    :profile_pic=>"http://posterous.com/images/profile/unknown75.gif"}>
+  
+  Favorites
+
+    > @user = User.me
+    > @user.favorites(:page => 1)
+    => [<#<Posterous::Post:0x00000100c2c7b0>...] 
+
+
+### Sites ###
+
+  Find a primary site
+  
+    > Site.primary
+    => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>
     
-    include Posterous
+  Find a Site by its hostname
+    > Site.find('twoism')
+    => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>
+
+  Find all of the current user's Sites
+
+    > Site.all(:page => 1)
+    => [<#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"postertester's posterous" ... }>]
+
+  Creating a new Site
+
+    > @site = Site.create(:hostname => 'superawesome',:is_private => false)
+    => <#<Posterous::Site:0x00000100c22490> {:header_image=>nil, :name=>"superawesome's posterous" ... }>
+
+  Updating a Site
     
-    ### Sites ###
-    p Site.all
-    p Site.primary
-    p Site.find('twoism')
-    
-    ### Posts ###
-    p Site.primary.posts
-    p Site.primary.posts.create(:title => 'New Post', :body => 'From posterous API', :media => [File.open('/path/to/file')])
+    > @site = Site.primary
+    => @site.hostname = 'anotherawesomesite'
+    => @site.save
+
+  Deleting a Site
+    > @site = Site.find('sitetodelete')
+    => @site.destroy
+
+
+### Posts ###
+
+  Creating Posts
+
+    > @site = Site.primary
+    > @post = @site.posts.create(:title => 'New Post', :body => 'From posterous API', 
+    :media => [File.open('/path/to/file')])
+    => <#<Posterous::Post:0x00000100c2c7b0>
+
+  Updating Posts
+  
+    > @post = @site.posts.find(<id>)
+    > @post.title = 'Kittens are radical!'
+    > @post.save
+
+  Deleting Posts
+  
+    > @post = @site.posts.find(<id>)
+    > @post.destroy
+
+  Retrieving Posts
+
+    # paginated
+    > @site.posts(:page => 1)
+
+    # paginated since a given id
+    > @site.posts(:page => 3, :since_id => 123)
 
     
 ## Interactive Console Usage ##
