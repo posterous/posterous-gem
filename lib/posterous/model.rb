@@ -16,6 +16,18 @@ module Posterous
         AssociationProxy.new self, klass, :one, *args
       end
     end
+
+    def self.parsed_resource_url
+      resource_path.gsub(/:\w+/) {|sym| finder_opts[sym.sub(/:/,'').to_sym] }
+    end
+
+    def parsed_resource_url
+      self.class.parsed_resource_url     
+    end
+
+    def self.resource_url_keys
+      resource_path.scan(/:(\w+)/).flatten.collect(&:to_sym)
+    end
     
     # hack for ruby 1.8.7 
     def id
@@ -77,33 +89,26 @@ module Posterous
 
       new post(parsed_resource_url, param_scope => params, :media => media)
     end
+
+    # url used for the update & delete actions
+    def instance_url
+      "#{parsed_resource_url}/#{self.id}"
+    end
     
     def save
       return if hash_for_update.empty?
-      @struct = self.class.post(parsed_resource_url + "/#{self.id}", { param_scope => hash_for_update, '_method' => 'put' } )
+      @struct = self.class.post(instance_url, { param_scope => hash_for_update, '_method' => 'put' } )
       changed_fields.clear
     end
 
     def destroy
-      self.class.delete(parsed_resource_url + "/#{self.id}")
+      self.class.delete(instance_url)
     end
 
     def reload
       self.class.find(self.id)
     end
 
-    def self.parsed_resource_url
-      resource_path.gsub(/:\w+/) {|sym| finder_opts[sym.sub(/:/,'').to_sym] }
-    end
-
-    def parsed_resource_url
-      self.class.parsed_resource_url     
-    end
-
-    def self.resource_url_keys
-      resource_path.scan(/:(\w+)/).flatten.collect(&:to_sym)
-    end
-        
     def initialize struct
       @struct = struct
     end
