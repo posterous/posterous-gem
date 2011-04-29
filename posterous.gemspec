@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'typhoeus'
   s.add_dependency 'json'
+  s.add_dependency 'eventmachine'
+  s.add_dependency 'em-http-request'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'ZenTest'
   s.add_development_dependency 'autotest-growl'

@@ -8,6 +8,7 @@ module Posterous
   attr_reader :config
 
   autoload :Connection,         'posterous/connection'
+  autoload :AsyncConnection,    'posterous/async_connection'
   autoload :Inheritable,        'posterous/inheritable'
   autoload :Model,              'posterous/model'
   autoload :Tag,                'posterous/models/tag'
