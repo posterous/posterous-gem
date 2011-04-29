@@ -1,7 +1,8 @@
 module Posterous
   class AssociationProxy
     attr_reader :klass, :proxied
-
+    
+    # poached from activerecord
     instance_methods.each { |m| undef_method m unless m.to_s =~ /^(?:nil\?|send|object_id|to_a)$|^__|^respond_to|proxy_/ }
     
     def initialize proxied, klass, association_type, *args
@@ -9,7 +10,10 @@ module Posterous
       @proxied            = proxied
       @association        = nil
 
+      # set the parent id for the assoc class
       @association_klass.finder_opts[klass.resource_url_keys.last] = proxied.id
+      # grab any needed finder opts from the proxied instance
+      # and grab them from the parent resource
       @association_klass.finder_opts.merge!(@proxied.finder_opts)
 
       load_method   =  association_type == :many ? :all : :load
