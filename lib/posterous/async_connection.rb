@@ -50,8 +50,8 @@ module Posterous
         
         EM.run do
           Fiber.new {
-            response 	= async_request(verb, request_url, params)
-            @resp 		= parse(response.response)
+            response  = async_request(verb, request_url, params)
+            @resp     = parse(response.response)
             EM.stop
           }.resume
         end
