@@ -46,7 +46,7 @@ module Posterous
         puts "POSTLY :: #{verb.upcase} #{path} #{params}\n\n" if ENV['POSTLY_DEBUG']
 
         request_url = "#{Posterous::BASE_API_URL}#{path}"
-				@resp 			= nil
+        @resp       = nil
         
         EM.run do
           Fiber.new {
@@ -55,7 +55,7 @@ module Posterous
             EM.stop
           }.resume
         end
-				@resp
+        @resp
       end
     end
 
