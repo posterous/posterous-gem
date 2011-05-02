@@ -4,7 +4,7 @@ describe Posterous::AsyncConnection do
   include Posterous::AsyncConnection
   
   it "should handle GET requests" do
-    p get('/')
+    p get('/users/me')
   end 
 
   it "should handle POST requests" do

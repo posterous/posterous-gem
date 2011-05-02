@@ -9,16 +9,6 @@ module Posterous
 
     extend self
 
-    def http
-      Typhoeus::Request
-    end
-
-    def default_options
-      @default_options ||= { 
-        :username => Posterous.config['username'], 
-        :password => Posterous.config['password']
-      }
-   end
 
     def default_params
       @default_params ||= { :api_token => Posterous.config['api_token'] }
@@ -36,7 +26,12 @@ module Posterous
     def async_request method, url, params
       f = Fiber.current
 
-      request = EventMachine::HttpRequest.new(url).send(method, {:params => params})
+      request = EventMachine::HttpRequest.new(url).send(method, {
+        :params => params.merge!(default_params), 
+        :head 	=> {
+          'authorization' => [Posterous.config['username'], Posterous.config['password']]
+        }
+      })
       request.callback { f.resume(request) }
       request.errback { f.resume(request) }
 
@@ -51,16 +46,16 @@ module Posterous
         puts "POSTLY :: #{verb.upcase} #{path} #{params}\n\n" if ENV['POSTLY_DEBUG']
 
         request_url = "#{Posterous::BASE_API_URL}#{path}"
-
+				@resp 			= nil
+        
         EM.run do
           Fiber.new {
-            p "asdf"
-            response = async_request(verb, request_url, params)
-            p response
+            response 	= async_request(verb, request_url, params)
+            @resp 		= parse(response.response)
             EM.stop
           }.resume
         end
-
+				@resp
       end
     end
 
