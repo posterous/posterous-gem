@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-RC_PATH   = "#{ENV['HOME']}/.posterousrc"
-HELP_DOC  = <<DOC
+CONFIG_PATH   = "#{ENV['HOME']}/.posterousrc"
+HELP_DOC      = <<DOC
 ## API Help ##
 
 # Get your primary site
@@ -39,12 +39,12 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 
 def setup
-  @yml = YAML.load_file(RC_PATH) rescue nil
+  @yml = YAML.load_file(CONFIG_PATH) rescue nil
 
   if @yml.is_a?(Hash)
     @cfg = @yml
   else
-    @rc  = File.open(RC_PATH, 'w')
+    @rc  = File.open(CONFIG_PATH, 'w')
     @cfg = {}
     puts "Email Address:"
     @cfg['username'] = gets.chomp
@@ -67,7 +67,7 @@ def setup
   begin
     Posterous::User.me
   rescue Exception => e
-    FileUtils.rm(RC_PATH, :force => true)
+    FileUtils.rm(CONFIG_PATH, :force => true)
     puts "*"*100
     puts "\033[31m#Invalid Login: #{e.inspect}\033[0m"
     puts "*"*100
@@ -83,7 +83,6 @@ include Posterous
 def current_user
   @current_user ||= User.me
 end
-
 
 puts "*"*100
 puts "\033[32mHi #{current_user.nickname}, welcome to the Posterous API Console! For help type `newb`.\033[0m\n"
