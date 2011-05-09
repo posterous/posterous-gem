@@ -69,7 +69,7 @@ def setup
   rescue Exception => e
     FileUtils.rm(RC_PATH, :force => true)
     puts "*"*100
-    puts "Invalid Login: #{e.inspect}"
+    puts "\033[31m#Invalid Login: #{e.inspect}\033[0m"
     puts "*"*100
     setup
   end
@@ -85,9 +85,8 @@ def current_user
 end
 
 
-
 puts "*"*100
-puts "Hi #{current_user.nickname}, welcome to the Posterous API Console! For help type `newb`.\n"
+puts "\033[32mHi #{current_user.nickname}, welcome to the Posterous API Console! For help type `newb`.\033[0m\n"
 puts "*"*100
 
 IRB.setup(nil)
