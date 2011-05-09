@@ -35,40 +35,56 @@ end
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
-%w{posterous irb}.each { |f| require f }
+%w{posterous irb fileutils}.each { |f| require f }
 
-rc  = File.exists?(RC_PATH) ? File.open(RC_PATH, 'r') : File.open(RC_PATH, 'w')
-yml = YAML.load_file(RC_PATH)
 
-if yml.is_a?(Hash)
-  cfg = yml
-else
-  cfg = {}
-  puts "Email Address:"
-  cfg['username'] = gets.chomp
-  begin
-    puts "Password:"
-    system('stty -echo')
-    cfg['password'] = gets.chomp
-  rescue
-  ensure
-    system('stty echo')
+def setup
+  @yml = YAML.load_file(RC_PATH) rescue nil
+
+  if @yml.is_a?(Hash)
+    @cfg = @yml
+  else
+    @rc  = File.open(RC_PATH, 'w')
+    @cfg = {}
+    puts "Email Address:"
+    @cfg['username'] = gets.chomp
+    begin
+      puts "Password:"
+      system('stty -echo')
+      @cfg['password'] = gets.chomp
+    rescue
+    ensure
+      system('stty echo')
+    end
+    puts "Api Token:"
+    @cfg['api_token'] = gets.chomp
+    @rc.puts @cfg.to_yaml
+    @rc.close
   end
-  puts "Api Token:"
-  cfg['api_token'] = gets.chomp
-  rc.puts cfg.to_yaml
+
+  Posterous.config = @cfg
+  
+  begin
+    Posterous::User.me
+  rescue Exception => e
+    FileUtils.rm(RC_PATH, :force => true)
+    puts "*"*100
+    puts "Invalid Login: #{e.inspect}"
+    puts "*"*100
+    setup
+  end
 end
 
-rc.puts cfg.to_yaml
-rc.close
+setup
 
-Posterous.config = cfg
 
 include Posterous
 
 def current_user
   @current_user ||= User.me
 end
+
+
 
 puts "*"*100
 puts "Hi #{current_user.nickname}, welcome to the Posterous API Console! For help type `newb`.\n"
