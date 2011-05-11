@@ -34,14 +34,6 @@ describe Posterous::ExternalSite do
       end
     end
 
-    #describe "#save" do 
-      #it "updates a external_site" do
-        #@external_site.site_url = 'http://chrisburnett.tumblr.com'
-        #@external_site.save
-        #@external_site.reload.blogid.should  == 'bar'
-      #end
-    #end
-
     describe "#destroy" do
       it "deletes a external_site and raises a Connection error when not found" do
         @external_site.destroy

@@ -29,16 +29,19 @@ HELP_DOC      = <<DOC
 => <#<Posterous::Comment:0x0000010135f758> ... }>
 DOC
 
-def newb
-  puts HELP_DOC
-end
-
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 %w{posterous irb fileutils}.each { |f| require f }
 
+def newb
+  puts HELP_DOC
+end
 
-def setup
+def current_user
+  @current_user ||= User.me
+end
+
+def load_or_setup_config
   @yml = YAML.load_file(CONFIG_PATH) rescue nil
 
   if @yml.is_a?(Hash)
@@ -68,21 +71,18 @@ def setup
     Posterous::User.me
   rescue Exception => e
     FileUtils.rm(CONFIG_PATH, :force => true)
+    
     puts "*"*100
     puts "\033[31m#Invalid Login: #{e.inspect}\033[0m"
     puts "*"*100
-    setup
+
+    load_or_setup_config
   end
 end
 
-setup
-
+load_or_setup_config
 
 include Posterous
-
-def current_user
-  @current_user ||= User.me
-end
 
 puts "*"*100
 puts "\033[32mHi #{current_user.nickname}, welcome to the Posterous API Console! For help type `newb`.\033[0m\n"
