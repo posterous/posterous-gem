@@ -7,6 +7,10 @@ module Posterous
       find('me')
     end
 
+    def save
+     @struct = self.class.put("/users/#{self.id}/profile", {:user => hash_for_update})
+    end
+
     def favorites
       self.class.get("/users/#{self.id}/favorites").collect{|f| Post.new(f) }
     end

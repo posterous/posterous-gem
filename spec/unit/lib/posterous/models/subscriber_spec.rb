@@ -20,25 +20,4 @@ describe Posterous::Subscriber do
     end
   end
 
-  describe "CRUD" do
-    before(:all) do
-      @subscriber     = @primary.subscribers.create({:user_id => FAKE_USER_ID})
-    end
-
-    describe "#create" do
-      it "creates a subscriber" do
-        @primary.subscribers.all.first.id.should == FAKE_USER_ID
-      end
-    end
-
-    describe "#destroy" do
-      it "deletes a subscriber and raises a Connection error when not found" do
-        @primary.subscribers.first.destroy
-        lambda {
-          @primary.subscribers.find(FAKE_USER_ID)
-        }.should raise_error Posterous::Connection::ConnectionError
-      end
-    end
-  end
-
 end

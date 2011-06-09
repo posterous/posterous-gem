@@ -17,31 +17,4 @@ describe Posterous::ExternalSite do
       @external_sites.each{|p| p.id.should_not be_nil }
     end
   end
-
-  describe "CRUD" do
-    before(:all) do
-      @external_site     = @primary.external_sites.create({
-        :site_url     => 'http://chrisburnett.tumblr.com', 
-        :service_type => 'ExtTumblr',
-        :username     => 'foo'
-      })
-      @external_site_id  = @external_site.id
-    end
-
-    describe "#create" do
-      it "creates a external_site" do
-        @external_site.site_url.should == 'http://chrisburnett.tumblr.com'
-      end
-    end
-
-    describe "#destroy" do
-      it "deletes a external_site and raises a Connection error when not found" do
-        @external_site.destroy
-        lambda {
-          @primary.external_sites.find(@external_site.id)
-        }.should raise_error Posterous::Connection::ConnectionError
-      end
-    end
-  end
-
 end
