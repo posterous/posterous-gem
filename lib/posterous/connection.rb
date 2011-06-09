@@ -34,13 +34,13 @@ module Posterous
 
         params = args.last || {}
 
-        puts "POSTLY :: #{verb.upcase} #{path} #{params}\n\n" if ENV['POSTLY_DEBUG']
+        puts "POSTEROUS :: #{verb.to_s.upcase} #{path} #{params}\n\n" if ENV['POSTEROUS_DEBUG']
 
         response  = http.send(verb, "#{Posterous::BASE_API_URL}#{path}", 
                       default_options.merge!(:params => default_params.merge!(params)))
         result    = parse(response.body)
-        
-        puts "POSTLY :: #{response.body}\n\n" if ENV['POSTLY_DEBUG']
+
+        puts "POSTEROUS :: #{response.body}\n\n" if ENV['POSTEROUS_DEBUG']
 
         unless [200,201].include?(response.code)
           msg = result.nil? ? response.body : "#{result.error} #{result.message}"
