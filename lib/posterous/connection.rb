@@ -40,7 +40,7 @@ module Posterous
                       default_options.merge!(:params => default_params.merge!(params)))
         result    = parse(response.body)
 
-        puts "POSTEROUS :: #{response.body}\n\n" if ENV['POSTEROUS_DEBUG']
+        puts "POSTEROUS :: #{response.code} -- #{response.body}\n\n" if ENV['POSTEROUS_DEBUG']
 
         unless [200,201].include?(response.code)
           msg = result.nil? ? response.body : "#{result.error} #{result.message}"

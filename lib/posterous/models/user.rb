@@ -8,7 +8,8 @@ module Posterous
     end
 
     def save
-     @struct = self.class.put("/users/#{self.id}/profile", {:user => hash_for_update})
+     @resp = self.class.post("/users/#{self.id}/profile", {:user => hash_for_update, '_method' => 'put'})
+     changed_fields.clear
     end
 
     def favorites

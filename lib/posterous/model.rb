@@ -94,7 +94,7 @@ module Posterous
     def instance_url
       "#{parsed_resource_url}/#{self.id}"
     end
-    
+
     def save
       return if hash_for_update.empty?
       @struct = self.class.post(instance_url, { param_scope => hash_for_update, '_method' => 'put' } )

@@ -20,7 +20,7 @@ describe Posterous::Post do
 
   describe "CRUD" do
     before(:all) do
-      @post     = @primary.posts.create({:title => 'from posterous', :body => 'kittens are rad!'})
+      @post     = @primary.posts.create({:title => 'from posterous', :body => 'kittens are rad!', :media => [SAMPLE_IMAGE]})
       @post_id  = @post.id
     end
 
