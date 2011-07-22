@@ -22,7 +22,7 @@ module Posterous
     end
 
     def parsed_resource_url
-      self.class.parsed_resource_url     
+      self.class.parsed_resource_url
     end
 
     def self.resource_url_keys
@@ -87,6 +87,7 @@ module Posterous
       media_array = params.delete(:media)
       media       = Hash[media_array.each_with_index.map{|v,i| [i,v] }] unless media_array.nil?
 
+      finder_opts.merge!(params)
       new post(parsed_resource_url, param_scope => params, :media => media)
     end
 
