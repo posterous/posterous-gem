@@ -35,7 +35,6 @@ module Posterous
       else
         limit = Posterous.config['limit']
       end
-      puts "limited" * 80 if limit 
       sleep 1 if limit
     end
 
