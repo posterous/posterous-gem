@@ -29,12 +29,24 @@ module Posterous
       nil
     end
 
+    def wait_if_needed
+      if Posterous.config['limit'].nil?
+        limit = true
+      else
+        limit = Posterous.config['limit']
+      end
+      puts "limited" * 80 if limit 
+      sleep 1 if limit
+    end
+
     [:get, :post, :put, :delete].each do |verb|
       define_method verb do |path, *args|
 
         params = args.last || {}
 
         puts "POSTEROUS :: #{verb.to_s.upcase} #{path} #{params}\n\n" if ENV['POSTEROUS_DEBUG']
+
+        wait_if_needed
 
         response  = http.send(verb, "#{Posterous::BASE_API_URL}#{path}", 
                       default_options.merge!(:params => default_params.merge!(params)))
