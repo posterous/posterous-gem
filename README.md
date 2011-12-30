@@ -27,7 +27,7 @@ Posterous.config = {
 ## A note on rate limits ##
 
 By default the gem will wait one second per api request. However, if you have a whitelisted 
-token, you can pass ```:limit => false``` in Posterous.config like so:
+token, you can pass ```'limit' => false``` in Posterous.config like so:
 
 
 ```ruby
