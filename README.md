@@ -10,7 +10,7 @@
 
 ## Rails ##
 
-  In you Gemfile:
+  In your Gemfile:
   
     gem 'posterous'
 
