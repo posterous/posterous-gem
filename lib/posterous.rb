@@ -1,4 +1,4 @@
-%w[typhoeus yaml json ostruct].each { |lib| require lib }
+%w[cgi typhoeus yaml json ostruct].each { |lib| require lib }
 
 module Posterous
   BASE_API_URL = 'http://posterous.com/api/v2'

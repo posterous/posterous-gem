@@ -87,6 +87,7 @@ module Posterous
       media_array = params.delete(:media)
       media       = Hash[media_array.each_with_index.map{|v,i| [i,v] }] unless media_array.nil?
 
+      params = self.escape_hash(params)
       finder_opts.merge!(params)
       new post(parsed_resource_url, param_scope => params, :media => media)
     end
@@ -94,6 +95,15 @@ module Posterous
     # url used for the update & delete actions
     def instance_url
       "#{parsed_resource_url}/#{self.id}"
+    end
+
+    def self.escape_hash(params = {})
+      escaped = {}
+      params.each do |k,v|
+        escaped[k] = CGI.escape(v) 
+      end
+      params = escaped
+      return params
     end
 
     def save
@@ -119,7 +129,7 @@ module Posterous
     end
 
     def hash_for_update
-      Hash[changed_fields.collect{ |f| [f, self.send(f)] }]
+      Hash[changed_fields.collect{ |f| [f, CGI.escape(self.send(f))] }]
     end
 
     def respond_to? *args
